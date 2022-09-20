@@ -1,0 +1,17 @@
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\obj\Debug\Vidian.csproj.AssemblyReference.cache
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\obj\Debug\Vidian.csproj.SuggestedBindingRedirects.cache
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\obj\Debug\Vidian.csproj.CoreCompileInputs.cache
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\bin\Debug\Vidian.exe.config
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\bin\Debug\Vidian.exe
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\bin\Debug\Vidian.pdb
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\bin\Debug\CommandLine.xml
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\obj\Debug\Vidian.csproj.CopyComplete
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\obj\Debug\Vidian.exe
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\obj\Debug\Vidian.pdb
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\obj\Debug\Vidian.csproj.Fody.CopyLocal.cache
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\obj\Debug\Vidian.csproj.Fody.RuntimeCopyLocal.cache
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\bin\Debug\System.Buffers.xml
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\bin\Debug\System.Memory.xml
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\bin\Debug\System.Numerics.Vectors.xml
+Z:\Tools\RedTeam\Projects\Vidian\Vidian\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
