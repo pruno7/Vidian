@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.ServiceProcess;
 using System.Runtime.InteropServices;
 using CommandLine;
-using Microsoft.Win32;
 
 
 namespace Vidian
@@ -55,20 +54,21 @@ namespace Vidian
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool StartService(IntPtr hService, int dwNumServiceArgs, string[] lpServiceArgVectors);
 
-        // ChangeServiceConfigW
-        [DllImport("Advapi32.dll", EntryPoint = "ChangeServiceConfigA", CharSet = CharSet.Unicode, ExactSpelling = true, SetLastError = true)]
+        // ChangeServiceConfig
+        [DllImport("advapi32.dll", EntryPoint = "ChangeServiceConfig")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool ChangeServiceConfig(IntPtr hService,
-            int dwServiceType,
+        public static extern bool ChangeServiceConfigA(
+            IntPtr hService,
+            uint dwServiceType,
             int dwStartType,
             int dwErrorControl,
-            [In] string lpBinaryPathName,
-            [In] string lpLoadOrderGroup,
-            IntPtr lpdwTagId,
-            [In] string lpDependencies,
-            [In] string lpServiceStartName,
-            [In] string lpPassWord,
-            [In] string lpDisplayName
+            string lpBinaryPathName,
+            string lpLoadOrderGroup,
+            string lpdwTagId,
+            string lpDependencies,
+            string lpServiceStartName,
+            string lpPassword,
+            string lpDisplayName
         );
 
         private struct QueryServiceConfigStruct
@@ -108,8 +108,7 @@ namespace Vidian
                 SC_MANAGER_MODIFY_BOOT_CONFIG,
 
             GENERIC_READ = ACCESS_MASK.STANDARD_RIGHTS_READ |
-                SC_MANAGER_ENUMERATE_SERVICE |
-                SC_MANAGER_QUERY_LOCK_STATUS,
+                SC_MANAGER_ENUMERATE_SERVICE,
 
             GENERIC_WRITE = ACCESS_MASK.STANDARD_RIGHTS_WRITE |
                 SC_MANAGER_CREATE_SERVICE |
@@ -150,7 +149,9 @@ namespace Vidian
         public static void services(string[] args)
         {
             int bytesNeeded = 5;
-
+            const uint SERVICE_NO_CHANGE = 0xffffffff;
+            const int SERVICE_DEMAND_START = 0x00000003;
+            const int SERVICE_ERROR_IGNORE = 0x00000000;
             try
             {
                 var parsedResult = Parser.Default.ParseArguments<Options>(args.Skip(1)).WithParsed(parser => opts = parser);
@@ -188,7 +189,6 @@ namespace Vidian
                         SafeHandle serviceHandle = service.ServiceHandle;*/
 
                         IntPtr serviceHandle = OpenService(schManager, opts.name, SERVICE_ACCESS.SERVICE_MODIFY_EXECUTE);
-                        Console.WriteLine(serviceHandle);
                         if (!string.IsNullOrEmpty(opts.binpath))
                         {
                             bool callResult;
@@ -212,7 +212,7 @@ namespace Vidian
                             string originalBinaryPath = Marshal.PtrToStringAuto(qscs.binaryPathName);
                             Utils.print.white("\t[*] Original binpath : " + originalBinaryPath);
                             Marshal.FreeCoTaskMem(qscPtr);
-                            if (callResult = ChangeServiceConfig(serviceHandle, -1, -1, -1, opts.binpath, null, IntPtr.Zero, null, null, null, null))
+                            if (callResult = ChangeServiceConfigA(serviceHandle, SERVICE_NO_CHANGE, SERVICE_DEMAND_START, SERVICE_ERROR_IGNORE, opts.binpath, null, null, null, null, null, null))
                             {
                                 
                                 Utils.print.green("\t[+] Modified the following service : " + opts.name);
@@ -251,7 +251,7 @@ namespace Vidian
                             if (opts.original)
                             {
                                 Utils.print.white("\t[*] Current binpath : " + opts.binpath);
-                                if (callResult = ChangeServiceConfig(serviceHandle, -1, -1, -1, originalBinaryPath, null, IntPtr.Zero, null, null, null, null))
+                                if (callResult = ChangeServiceConfigA(serviceHandle, SERVICE_NO_CHANGE, SERVICE_DEMAND_START, SERVICE_ERROR_IGNORE, originalBinaryPath, null, null, null, null, null, null))
                                 {
                                     Utils.print.green("\t[+] binpath was reverted to original value: " + opts.name);
                                 }
