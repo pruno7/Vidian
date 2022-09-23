@@ -19,17 +19,21 @@ namespace Vidian
                 ");
                 return;
             }
-            var option = args[0];
-            switch (option)
+            
+            switch (args[0])
             {
                 case "services":
-                    Services.services(args);
+                    Modules.ServiceTriager.services(args);
                     break;
-                /*case "schtasks":
-                    Schtasks.schtasks();
-                    break;*/
+                case "schtasks":
+                    /*Schtasks.schtasks();*/
+                    break;
                 default:
                     Utils.print.red("[-] Invalid option");
+                    Utils.print.white(@"The available options are:
+                    services : will enable you to interact with services
+                    schtasks : will enable you to interact with scheduled tasks
+                    ");
                     break;
             }
         }
