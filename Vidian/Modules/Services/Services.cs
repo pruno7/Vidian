@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ServiceProcess;
+/*using System.ServiceProcess;*/
 using System.Runtime.InteropServices;
 
 
@@ -14,7 +14,7 @@ namespace Vidian.Modules.Services
     {
 
         // Useless en vrai, à virer ?
-        public static void listServices()
+        /*public static void listServices()
         {
             Utils.print.white("\t[*] Discovered services : ");
 
@@ -25,7 +25,7 @@ namespace Vidian.Modules.Services
                 Utils.print.white("\tName : " + service.ServiceName);
                 Utils.print.white("\tStatus: " + service.Status);
             }
-        }
+        }*/
 
         // Modify service binpath, execute, put back original binpath
         //https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/scshell-fileless-lateral-movement-using-service-manager/
@@ -106,7 +106,6 @@ namespace Vidian.Modules.Services
                     {
                         Utils.print.green("\t[+] Started service " + serviceName);
                     }
-                                    
                 }
                 else
                 {

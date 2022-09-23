@@ -9,8 +9,8 @@ namespace Vidian.Modules
 {
     class ServiceOptions
     {
-        [Option("modify", Required = false, HelpText = "Modify the supplied service")]
-        public bool modify { get; set; }
+        /*[Option("modify", Required = false, HelpText = "Modify the supplied service")]
+        public bool modify { get; set; }*/
 
         [Option("list", Required = false, HelpText = "List all services")]
         public bool list { get; set; }
@@ -31,7 +31,7 @@ namespace Vidian.Modules
     class ServiceTriager
     {
         public static ServiceOptions opts = new ServiceOptions();
-        public static void services(string[] args) 
+        public static void services(string[] args)
         {
             var parsedResult = Parser.Default.ParseArguments<ServiceOptions>(args.Skip(2)).WithParsed(parser => opts = parser);
 
@@ -39,6 +39,8 @@ namespace Vidian.Modules
             {
                 case "binpath":
                     Utils.print.white("[*] Using binpath module");
+                    /*if (opts.modify)
+                    {*/
                     if (opts.name != null)
                     {
                         Utils.print.white("[*] provided service name : " + opts.name);
@@ -47,7 +49,7 @@ namespace Vidian.Modules
                             Utils.print.white("[*] provided binpath : " + opts.binpath);
                             Services.Services.modifyService(opts.name, opts.binpath, opts.execute, opts.revert);
                         }
-                        else 
+                        else
                         {
                             Utils.print.red("[-] Provide a binpath, use --help to show options");
                         }
@@ -56,6 +58,12 @@ namespace Vidian.Modules
                     {
                         Utils.print.red("[-] Provide a service name, use --help to show options");
                     }
+                    /*}
+                    else
+                    {
+                        Utils.print.red("[-] Provide an option, use --help to show options");
+                    }*/
+
                     break;
                 case "unquoted":
                     Utils.print.white("[*] Using unquoted module\n");
@@ -71,5 +79,14 @@ namespace Vidian.Modules
             }
 
         }
+    }
+
+    class schtasksOptions
+    {
+    }
+
+    class schtasksTriager
+    {
+
     }
 }
