@@ -48,12 +48,14 @@ namespace Vidian.Modules.Services
                 if (schManager == IntPtr.Zero)
                 {
                     Utils.print.red("[-] OpenSCManagerA failed!Error:{ 0} "+ ServiceUtils.GetLastError());
+                    return;
                 }
                     
                 IntPtr serviceHandle = ServiceUtils.OpenService(schManager, serviceName, ServiceUtils.SERVICE_ACCESS.SERVICE_MODIFY_EXECUTE);
                 if (serviceHandle == IntPtr.Zero)
                 {
                     Utils.print.red("[-] OpenService failed!Error:{ 0} " + ServiceUtils.GetLastError());
+                    return;
                 }
                 
                 bool callResult;
@@ -63,6 +65,7 @@ namespace Vidian.Modules.Services
                 if (retCode == 0 && bytesNeeded == 0)
                 {
                     Utils.print.red("\t[-] QueryServiceConfig failed to read the service path. Error: " + ServiceUtils.GetLastError());
+                    return;
                 }
                 else
                 {
@@ -86,6 +89,7 @@ namespace Vidian.Modules.Services
                 {
                     Utils.print.red("\t[-] Could not modify the service : " + serviceName);
                     Utils.print.red("\tError : " + ServiceUtils.GetLastError());
+                    return;
                 }
                 
                 if (execute)
@@ -96,6 +100,7 @@ namespace Vidian.Modules.Services
                     if (!callResult && dwResult != 1053)
                     {
                         Utils.print.red("\t[-] Could not start service : " + serviceName + ", Error : " + ServiceUtils.GetLastError());
+                        return;
                     }
                     else
                     {
@@ -106,6 +111,7 @@ namespace Vidian.Modules.Services
                 else
                 {
                     Utils.print.white("\t[!] Service : " + serviceName + " will not be started, pass --execute after modification");
+                    return;
                 }
                 
                 if (revert)
